@@ -1,21 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+import java.sql.*;
+import javax.swing.JOptionPane;
 
-/**
- *
- * @author RensonPlacino
- */
 public class Login extends javax.swing.JFrame {
 
+    Connection conn = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    
+ 
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
         
-        
+        // Creating a connection from your database to a java program
+        conn = MySQLConnect.ConnectDB();
         
     }
 
@@ -41,6 +41,11 @@ public class Login extends javax.swing.JFrame {
         jLabel2.setText("Password:");
 
         btn_login.setText("Login");
+        btn_login.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_loginActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -76,6 +81,34 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
+        try {
+            // SQL query
+            String sql = "SELECT * FROM user WHERE username =? and password =?";
+            
+            // Oject conn is used to create connection between java application and MySQL database
+            pst = conn.prepareStatement(sql); 
+            // pst is used for taking the value from txtField_username 
+            pst.setString(1, txtField_username.getText());
+            // pst is used for taking the value from txtField_password
+            pst.setString(2, txtField_password.getText());
+            rs = pst.executeQuery();
+            
+            // The next() method is the pointer or the Object of ResultSet that will start before the first row.
+            if(rs.next()){
+                // This will run, if the values passed on the txtFields for the username and password are correct.
+                JOptionPane.showMessageDialog(null, "Correct username & password!");
+           
+            } else {
+                // Otherwise
+                JOptionPane.showMessageDialog(null, "Incorrect username & password!");
+            }
+            
+        } catch (Exception e){
+            
+        }
+    }//GEN-LAST:event_btn_loginActionPerformed
 
     /**
      * @param args the command line arguments
