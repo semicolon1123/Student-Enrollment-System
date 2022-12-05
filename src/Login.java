@@ -1,5 +1,8 @@
+import java.awt.event.ActionListener;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
 
 public class Login extends javax.swing.JFrame {
 
@@ -37,10 +40,15 @@ public class Login extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        progressBar = new javax.swing.JProgressBar();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -119,6 +127,8 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        progressBar.setStringPainted(true);
+
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -128,7 +138,7 @@ public class Login extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(progressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -143,7 +153,7 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(progressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -180,6 +190,9 @@ public class Login extends javax.swing.JFrame {
             
             // The next() method is the pointer or the Object of ResultSet that will start before the first row.
             if(rs.next()){
+                // timer for JProgressBar will start after a successful login
+                timer.start();
+   
                 // This will run, if the values passed on the txtFields for the username and password are correct.
                 JOptionPane.showMessageDialog(null, "Correct username & password!");
            
@@ -192,6 +205,28 @@ public class Login extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_btn_loginActionPerformed
+    
+    // Creating a class for JProgressBar
+    public class progressbar implements ActionListener{
+    public void actionPerformed(ActionEvent evt){
+        
+        int n = progressBar.getValue();
+        // Suppose n = 1 and will increment until it reaches 100
+        if (n < 100){
+            n++;
+            progressBar.setValue(n); 
+        }else{
+            timer.stop(); // timer for JProgressBar will stop once the n becomes 100
+        }
+        
+    } // end actionPerformed
+            
+    } // end class here
+    
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // speed of JProgressBar
+        timer = new Timer(50,new progressbar());
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -237,8 +272,14 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JProgressBar progressBar;
     private javax.swing.JPasswordField txtField_password;
     private javax.swing.JTextField txtField_username;
     // End of variables declaration//GEN-END:variables
-}
+    
+    // Adding Code for JProgressBar
+    private Timer timer;
+
+
+} // End of class Login
+
