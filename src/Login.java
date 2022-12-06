@@ -4,6 +4,7 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 
 public class Login extends javax.swing.JFrame {
@@ -89,6 +90,11 @@ public class Login extends javax.swing.JFrame {
         txtField_password.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
         txtField_password.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtField_password.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 255), 1, true));
+        txtField_password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtField_passwordKeyPressed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel2.setText("Password:");
@@ -99,6 +105,11 @@ public class Login extends javax.swing.JFrame {
         btn_cancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_cancelActionPerformed(evt);
+            }
+        });
+        btn_cancel.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btn_cancelKeyPressed(evt);
             }
         });
 
@@ -254,6 +265,55 @@ public class Login extends javax.swing.JFrame {
         // Calling close() method upon clicking Cancel button
         close();
     }//GEN-LAST:event_btn_cancelActionPerformed
+
+    // Login by Pressing Enter key on keyboard
+    private void txtField_passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtField_passwordKeyPressed
+        
+        // returns the text entered in the username JTextField
+        String username = txtField_username.getText();
+        
+        // Checks if the username JTextField is blank
+        if (username.equals("")){
+            JOptionPane.showMessageDialog(null, "PLEASE TYPE USERNAME FOR LOGIN:::");
+            
+            // if the username JTextField has some text inside
+        } else {
+           if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+                        try {
+                            // SQL query
+                            String sql = "SELECT * FROM user WHERE username =? and password =?";
+            
+                            // Oject conn is used to create connection between java application and MySQL database
+                            pst = conn.prepareStatement(sql); 
+                             // pst is used for taking the value from txtField_username 
+                            pst.setString(1, txtField_username.getText());
+                            // pst is used for taking the value from txtField_password
+                            pst.setString(2, txtField_password.getText());
+                            rs = pst.executeQuery();
+            
+                            // The next() method is the pointer or the Object of ResultSet that will start before the first row.
+                            if(rs.next()){
+                            // timer for JProgressBar will start after a successful login
+                            timer.start();
+   
+                            // This will run, if the values passed on the txtFields for the username and password are correct.
+                            // JOptionPane.showMessageDialog(null, "Correct username & password!");
+           
+                            } else {
+                            // Otherwise
+                            JOptionPane.showMessageDialog(null, "Incorrect username & password!");
+                            }
+            
+                        } catch (Exception e){
+            
+                        }
+           } 
+        }
+    }//GEN-LAST:event_txtField_passwordKeyPressed
+
+    private void btn_cancelKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn_cancelKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_cancelKeyPressed
 
     /**
      * @param args the command line arguments
