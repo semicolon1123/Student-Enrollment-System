@@ -20,6 +20,10 @@ public class Login extends javax.swing.JFrame {
         // Creating a connection from your database to a java program
         conn = MySQLConnect.ConnectDB();
         
+        // Putting Login JFrame at the center of the screen
+        // Basic Syntax for centralizing JFrame Form
+        this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -44,6 +48,7 @@ public class Login extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
@@ -98,10 +103,10 @@ public class Login extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(1, 1, 1)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btn_login, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btn_login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtField_password, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE)
                     .addComponent(txtField_username, javax.swing.GroupLayout.Alignment.LEADING))
@@ -157,8 +162,6 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        jPanel1.getAccessibleContext().setAccessibleName("LOGIN");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -194,7 +197,7 @@ public class Login extends javax.swing.JFrame {
                 timer.start();
    
                 // This will run, if the values passed on the txtFields for the username and password are correct.
-                JOptionPane.showMessageDialog(null, "Correct username & password!");
+                // JOptionPane.showMessageDialog(null, "Correct username & password!");
            
             } else {
                 // Otherwise
@@ -217,6 +220,10 @@ public class Login extends javax.swing.JFrame {
             progressBar.setValue(n); 
         }else{
             timer.stop(); // timer for JProgressBar will stop once the n becomes 100
+            
+            // Opening Admin JFrame after JProgressBar stops at 100 
+            Admin admin = new Admin();
+            admin.setVisible(true);
         }
         
     } // end actionPerformed
@@ -239,7 +246,7 @@ public class Login extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

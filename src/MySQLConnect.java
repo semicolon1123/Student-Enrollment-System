@@ -13,7 +13,7 @@ public class MySQLConnect {
             
             // Establishing a Connection
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/emp_db","root","123");
-            JOptionPane.showMessageDialog(null, "Connection Successful");
+            // JOptionPane.showMessageDialog(null, "Connection Successful");
             return conn;
         } catch (Exception e){
             JOptionPane.showMessageDialog(null, e);
