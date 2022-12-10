@@ -5,7 +5,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import net.coobird.thumbnailator.Thumbnails;
 
 /*
@@ -62,7 +64,7 @@ public class StudentProfile extends javax.swing.JFrame {
         jTextField7 = new javax.swing.JTextField();
         jTextField9 = new javax.swing.JTextField();
         jDesktopPane1 = new javax.swing.JDesktopPane();
-        jLabel12 = new javax.swing.JLabel();
+        jLabel_image = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
         jPanel4 = new javax.swing.JPanel();
@@ -187,9 +189,9 @@ public class StudentProfile extends javax.swing.JFrame {
 
         jDesktopPane1.setBackground(new java.awt.Color(153, 153, 153));
 
-        jLabel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        jLabel_image.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
 
-        jDesktopPane1.setLayer(jLabel12, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jLabel_image, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -197,14 +199,14 @@ public class StudentProfile extends javax.swing.JFrame {
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
                 .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel_image, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel_image, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
 
@@ -460,29 +462,57 @@ public class StudentProfile extends javax.swing.JFrame {
     private void btn_upload_imageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_upload_imageActionPerformed
         // JFileChooser pops up after clicking UploadImage button
         JFileChooser chooser = new JFileChooser();
-        // Setting JFileChooser to null when it's opened
+        // Setting JFileChooser to null when it's opened to make sure nothing is selected
         chooser.showOpenDialog(null);
         // Getting the SelectedFile from the FileChooser and put inside this File f object
         File f = chooser.getSelectedFile();
         // Getting the Absolute pathname (String) of the Selected File into filename 
         filename = f.getAbsolutePath();
+        // Displaying the Absolute pathname of the file in JTextField image path
         txtField_image_path.setText(filename);
         
         // Writing Code for Uploading Image
         try{
+            // Creating a new object of File called image and passing the filename into the image variable of File
             File image = new File(filename);
             
+            // BufferedImage used to manipulate the image data and using Thumbnails.of() method 
+            // File image. size(dimension ranging from 0-255).creates a thumbnail and returns a BufferedImage()
+            // Thanks to the Thumbnailator jar file we can upload an image with different dimensions by setting a specific size ranging from 0 - 255
             BufferedImage thumbnail = Thumbnails.of(image).size(180, 220).asBufferedImage();
             
+            // Creating Buffer inside the memory 
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             
+            // Writes an image using an artbitrary image writer passing 3 parameters (BufferedImage, format, ByteArrayOutputStream)
             ImageIO.write(thumbnail, "jpeg", os);
             
+            // When the Buffered is inside the memory it allows us to receive the data 
             InputStream is = new ByteArrayInputStream(os.toByteArray());
             
+            // Creating a new object ByteArrayOutputStream into the memory 
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
             
+            // The object of byte[1024] is = 1 megabyte.
+            // meaning the image memory is 1 megabyte.
+            byte[] buf = new byte[1024];
+            
+            // Reads the next byte of data from the InputStream and returns int in the range of 0 to 255
+            // If no byte is available because of the end of the stream has been reached, returns -1
+            for(int readNum; (readNum = is.read(buf)) != -1;){
+                // Writes the image into the JPanel
+                // Writes the length of bytes from the specified byte array to this output stream buf.
+                bos.write(buf, 0, readNum);
+            }
+            
+            // Passing the object "thumbnail" of BufferedImage into the ImageIcon
+            viewImage = new ImageIcon(thumbnail);
+            // Displaying the icon viewImage into the JLabel_image
+            jLabel_image.setIcon(viewImage);
+            
+                    
         } catch (Exception e){
-            
+            JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_btn_upload_imageActionPerformed
 
@@ -535,7 +565,6 @@ public class StudentProfile extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -545,6 +574,7 @@ public class StudentProfile extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel_image;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -566,5 +596,6 @@ public class StudentProfile extends javax.swing.JFrame {
     private javax.swing.JTextField txtField_image_path;
     // End of variables declaration//GEN-END:variables
 String filename = null;
+private ImageIcon viewImage = null;
 }
 
