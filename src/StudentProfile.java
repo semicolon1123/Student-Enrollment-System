@@ -1,6 +1,12 @@
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.InputStream;
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import net.coobird.thumbnailator.Thumbnails;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -462,7 +468,22 @@ public class StudentProfile extends javax.swing.JFrame {
         filename = f.getAbsolutePath();
         txtField_image_path.setText(filename);
         
-      
+        // Writing Code for Uploading Image
+        try{
+            File image = new File(filename);
+            
+            BufferedImage thumbnail = Thumbnails.of(image).size(180, 220).asBufferedImage();
+            
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            
+            ImageIO.write(thumbnail, "jpeg", os);
+            
+            InputStream is = new ByteArrayInputStream(os.toByteArray());
+            
+            
+        } catch (Exception e){
+            
+        }
     }//GEN-LAST:event_btn_upload_imageActionPerformed
 
     /**
