@@ -4,28 +4,31 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import net.coobird.thumbnailator.Thumbnails;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 
-/**
- *
- * @author RensonPlacino
- */
 public class StudentProfile extends javax.swing.JFrame {
 
+    Connection conn = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    
     /**
      * Creates new form StudentInfo
      */
     public StudentProfile() {
         initComponents();
+        
+        // Creating a connection from your database to a java program
+        conn = MySQLConnect.ConnectDB();
     }
 
     /**
@@ -52,29 +55,29 @@ public class StudentProfile extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        txtField_contact_number = new javax.swing.JTextField();
+        txtField_student_id = new javax.swing.JTextField();
+        txtField_mname = new javax.swing.JTextField();
+        txtField_fname = new javax.swing.JTextField();
         txtField_image_path = new javax.swing.JTextField();
         radio_btn_male = new javax.swing.JRadioButton();
         radio_btn_female = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtField_address = new javax.swing.JTextArea();
         btn_upload_image = new javax.swing.JButton();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
+        txtField_course_id = new javax.swing.JTextField();
+        txtField_lname = new javax.swing.JTextField();
         jDesktopPane1 = new javax.swing.JDesktopPane();
-        jLabel_image = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        label_image = new javax.swing.JLabel();
+        dc_birthdate = new com.toedter.calendar.JDateChooser();
+        dc_date_enrolled = new com.toedter.calendar.JDateChooser();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btn_new = new javax.swing.JButton();
+        btn_save = new javax.swing.JButton();
+        btn_update = new javax.swing.JButton();
+        btn_delete = new javax.swing.JButton();
+        btn_clear = new javax.swing.JButton();
         jTextField3 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -122,31 +125,31 @@ public class StudentProfile extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel11.setText("Date Enrolled");
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtField_contact_number.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtField_contact_number.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtField_contact_numberActionPerformed(evt);
             }
         });
 
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtField_student_id.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtField_student_id.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtField_student_idActionPerformed(evt);
             }
         });
 
-        jTextField4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        txtField_mname.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtField_mname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                txtField_mnameActionPerformed(evt);
             }
         });
 
-        jTextField5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        txtField_fname.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtField_fname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                txtField_fnameActionPerformed(evt);
             }
         });
 
@@ -173,9 +176,9 @@ public class StudentProfile extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtField_address.setColumns(20);
+        txtField_address.setRows(5);
+        jScrollPane1.setViewportView(txtField_address);
 
         btn_upload_image.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btn_upload_image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/image upload.png"))); // NOI18N
@@ -186,25 +189,25 @@ public class StudentProfile extends javax.swing.JFrame {
             }
         });
 
-        jTextField7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        txtField_course_id.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtField_course_id.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                txtField_course_idActionPerformed(evt);
             }
         });
 
-        jTextField9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jTextField9.addActionListener(new java.awt.event.ActionListener() {
+        txtField_lname.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        txtField_lname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField9ActionPerformed(evt);
+                txtField_lnameActionPerformed(evt);
             }
         });
 
         jDesktopPane1.setBackground(new java.awt.Color(153, 153, 153));
 
-        jLabel_image.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        label_image.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
 
-        jDesktopPane1.setLayer(jLabel_image, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(label_image, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -212,16 +215,20 @@ public class StudentProfile extends javax.swing.JFrame {
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
                 .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(jLabel_image, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(label_image, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel_image, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(label_image, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
+
+        dc_birthdate.setDateFormatString("yyyy,MM,dd");
+
+        dc_date_enrolled.setDateFormatString("yyyy,MM,dd");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -243,19 +250,19 @@ public class StudentProfile extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addGap(21, 21, 21)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtField_contact_number, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                             .addComponent(radio_btn_male)
                             .addGap(27, 27, 27)
                             .addComponent(radio_btn_female, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jTextField9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtField_lname, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtField_mname, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(18, 18, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtField_fname, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtField_student_id, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dc_birthdate, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(54, 54, 54)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -268,8 +275,8 @@ public class StudentProfile extends javax.swing.JFrame {
                     .addComponent(btn_upload_image, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jDateChooser2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                        .addComponent(jTextField7, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addComponent(dc_date_enrolled, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                        .addComponent(txtField_course_id, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(jDesktopPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43))
@@ -284,22 +291,22 @@ public class StudentProfile extends javax.swing.JFrame {
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel1)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtField_student_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel8))
                                 .addGap(34, 34, 34)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtField_fname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtField_mname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3)))
                             .addComponent(jScrollPane1))
                         .addGap(8, 8, 8)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(btn_upload_image, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtField_lname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
@@ -312,14 +319,14 @@ public class StudentProfile extends javax.swing.JFrame {
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel6)
                                 .addComponent(jLabel11))
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(dc_birthdate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(dc_date_enrolled, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(11, 11, 11)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtField_contact_number, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtField_course_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jDesktopPane1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -330,30 +337,35 @@ public class StudentProfile extends javax.swing.JFrame {
 
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new-icon.png"))); // NOI18N
-        jButton2.setText("New");
+        btn_new.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        btn_new.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new-icon.png"))); // NOI18N
+        btn_new.setText("New");
 
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Save-icon.png"))); // NOI18N
-        jButton3.setText("Save");
-
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/update.png"))); // NOI18N
-        jButton4.setText("Update");
-
-        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
-        jButton5.setText("Delete");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        btn_save.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        btn_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Save-icon.png"))); // NOI18N
+        btn_save.setText("Save");
+        btn_save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                btn_saveActionPerformed(evt);
             }
         });
 
-        jButton6.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clear.png"))); // NOI18N
-        jButton6.setText("Clear");
+        btn_update.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        btn_update.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/update.png"))); // NOI18N
+        btn_update.setText("Update");
+
+        btn_delete.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        btn_delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
+        btn_delete.setText("Delete");
+        btn_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteActionPerformed(evt);
+            }
+        });
+
+        btn_clear.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
+        btn_clear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clear.png"))); // NOI18N
+        btn_clear.setText("Clear");
 
         jLabel13.setText("Search");
 
@@ -367,15 +379,15 @@ public class StudentProfile extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                .addComponent(jButton2)
+                .addComponent(btn_new)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
+                .addComponent(btn_save)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton4)
+                .addComponent(btn_update)
                 .addGap(12, 12, 12)
-                .addComponent(jButton5)
+                .addComponent(btn_delete)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton6)
+                .addComponent(btn_clear)
                 .addGap(64, 64, 64))
         );
         jPanel5Layout.setVerticalGroup(
@@ -384,13 +396,13 @@ public class StudentProfile extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                        .addComponent(btn_new, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                         .addComponent(jLabel13)
                         .addComponent(jTextField3))
-                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_save, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(btn_update, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_delete, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_clear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -441,37 +453,37 @@ public class StudentProfile extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtField_student_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtField_student_idActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtField_student_idActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void txtField_mnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtField_mnameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_txtField_mnameActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void txtField_fnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtField_fnameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_txtField_fnameActionPerformed
 
     private void txtField_image_pathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtField_image_pathActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtField_image_pathActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void txtField_course_idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtField_course_idActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_txtField_course_idActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtField_contact_numberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtField_contact_numberActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtField_contact_numberActionPerformed
 
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
+    private void txtField_lnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtField_lnameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
+    }//GEN-LAST:event_txtField_lnameActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void btn_upload_imageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_upload_imageActionPerformed
         // JFileChooser pops up after clicking UploadImage button
@@ -522,7 +534,10 @@ public class StudentProfile extends javax.swing.JFrame {
             // Passing the object "thumbnail" of BufferedImage into the ImageIcon
             viewImage = new ImageIcon(thumbnail);
             // Displaying the icon viewImage into the JLabel_image
-            jLabel_image.setIcon(viewImage);
+            label_image.setIcon(viewImage);
+            
+            // Creating from OutputStream the image from JLabel into this studentImage
+            studentImage = bos.toByteArray();
             
                     
         } catch (Exception e){
@@ -537,6 +552,62 @@ public class StudentProfile extends javax.swing.JFrame {
     private void radio_btn_femaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_btn_femaleActionPerformed
         sex ="Female"; 
     }//GEN-LAST:event_radio_btn_femaleActionPerformed
+
+    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
+        
+        try {
+            // Writing SQL query and storing in sql String variable
+            String sql = "INSERT INTO stud_profile (stud_id, fname, mname, lname, sex, birthdate, contact_number, address, course_id, date_enrolled, stud_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            // Oject conn is used to create connection between java application and MySQL database and will execute the query
+            pst = conn.prepareStatement(sql);
+            
+            // Getting data to INSERT INTO the database
+            pst.setString(1, txtField_student_id.getText());
+            pst.setString(2, txtField_fname.getText());
+            pst.setString(3, txtField_mname.getText());
+            pst.setString(4, txtField_lname.getText());
+            pst.setString(5, sex);
+            
+            // Taking an object of Date from java utility package and getting the date from JDateChooseer birthdate 
+            java.util.Date date_birthdate = dc_birthdate.getDate();
+            // Giving format for the date using SimpleDateFormat Class by taking an object named sdf 
+            SimpleDateFormat sdf_birthdate = new SimpleDateFormat("yyy-MM-dd");
+            // Storing the date format in strDateOutput String variable
+            String strBirthDate = sdf_birthdate.format(date_birthdate);
+            
+            pst.setString(6, strBirthDate);
+            pst.setString(7, txtField_contact_number.getText());
+            pst.setString(8, txtField_address.getText());
+            pst.setBytes(9, studentImage);
+            
+             // Taking an object of Date from java utility package and getting the date from JDateChooseer birthdate 
+            java.util.Date date_enrolled = dc_birthdate.getDate();
+            // Giving format for the date using SimpleDateFormat Class by taking an object named sdf 
+            SimpleDateFormat sdf_date_enrolled = new SimpleDateFormat("yyy-MM-dd");
+            // Storing the date format in strDateOutput String variable
+            String strDateEnrolled = sdf_date_enrolled.format(date_enrolled);
+            
+            pst.setString(10, strDateEnrolled);
+            pst.setString(11, txtField_course_id.getText());
+            
+            // execute() method used to execute the SQL query
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Data Saved Successfully!");
+            
+        } catch (Exception e){
+            
+            JOptionPane.showMessageDialog(null, e);
+            
+        } finally {
+            try {
+                // Closing the connection in both ResultSet and PreparedStatement
+                rs.close();
+                pst.close();
+            } catch (Exception e){
+                
+            }
+        } // end of finally block
+    }//GEN-LAST:event_btn_saveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -575,15 +646,15 @@ public class StudentProfile extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_clear;
+    private javax.swing.JButton btn_delete;
+    private javax.swing.JButton btn_new;
+    private javax.swing.JButton btn_save;
+    private javax.swing.JButton btn_update;
     private javax.swing.JButton btn_upload_image;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
-    private com.toedter.calendar.JDateChooser jDateChooser2;
+    private com.toedter.calendar.JDateChooser dc_birthdate;
+    private com.toedter.calendar.JDateChooser dc_date_enrolled;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -597,7 +668,6 @@ public class StudentProfile extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabel_image;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -606,20 +676,22 @@ public class StudentProfile extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JLabel label_image;
     private javax.swing.JRadioButton radio_btn_female;
     private javax.swing.JRadioButton radio_btn_male;
+    private javax.swing.JTextArea txtField_address;
+    private javax.swing.JTextField txtField_contact_number;
+    private javax.swing.JTextField txtField_course_id;
+    private javax.swing.JTextField txtField_fname;
     private javax.swing.JTextField txtField_image_path;
+    private javax.swing.JTextField txtField_lname;
+    private javax.swing.JTextField txtField_mname;
+    private javax.swing.JTextField txtField_student_id;
     // End of variables declaration//GEN-END:variables
 String filename = null;
 private ImageIcon viewImage = null;
 private String sex; 
+byte[] studentImage = null;
 }
 
