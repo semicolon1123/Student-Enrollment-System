@@ -57,8 +57,8 @@ public class StudentProfile extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         jTextField5 = new javax.swing.JTextField();
         txtField_image_path = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        radio_btn_male = new javax.swing.JRadioButton();
+        radio_btn_female = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         btn_upload_image = new javax.swing.JButton();
@@ -157,11 +157,21 @@ public class StudentProfile extends javax.swing.JFrame {
             }
         });
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Male");
+        buttonGroup1.add(radio_btn_male);
+        radio_btn_male.setText("Male");
+        radio_btn_male.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radio_btn_maleActionPerformed(evt);
+            }
+        });
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Female");
+        buttonGroup1.add(radio_btn_female);
+        radio_btn_female.setText("Female");
+        radio_btn_female.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                radio_btn_femaleActionPerformed(evt);
+            }
+        });
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -235,9 +245,9 @@ public class StudentProfile extends javax.swing.JFrame {
                             .addGap(21, 21, 21)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                            .addComponent(jRadioButton1)
+                            .addComponent(radio_btn_male)
                             .addGap(27, 27, 27)
-                            .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(radio_btn_female, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jTextField9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -295,8 +305,8 @@ public class StudentProfile extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(jLabel9)
                             .addComponent(txtField_image_path, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jRadioButton1)
-                            .addComponent(jRadioButton2))
+                            .addComponent(radio_btn_male)
+                            .addComponent(radio_btn_female))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -397,6 +407,7 @@ public class StudentProfile extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.setRequestFocusEnabled(false);
         jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -519,6 +530,14 @@ public class StudentProfile extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_upload_imageActionPerformed
 
+    private void radio_btn_maleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_btn_maleActionPerformed
+       sex = "Male";
+    }//GEN-LAST:event_radio_btn_maleActionPerformed
+
+    private void radio_btn_femaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radio_btn_femaleActionPerformed
+        sex ="Female"; 
+    }//GEN-LAST:event_radio_btn_femaleActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -584,8 +603,6 @@ public class StudentProfile extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
@@ -597,9 +614,12 @@ public class StudentProfile extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JRadioButton radio_btn_female;
+    private javax.swing.JRadioButton radio_btn_male;
     private javax.swing.JTextField txtField_image_path;
     // End of variables declaration//GEN-END:variables
 String filename = null;
 private ImageIcon viewImage = null;
+private String sex; 
 }
 
