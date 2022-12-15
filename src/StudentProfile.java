@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -554,6 +555,17 @@ public class StudentProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_radio_btn_femaleActionPerformed
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
+        // Writing code for data input validation
+        String firstName_validate = txtField_fname.getText();
+        String mname_validate = txtField_mname.getText();
+        String lname_validate = txtField_lname.getText();
+        
+        Date date = dc_birthdate.getDate();
+        String cn_validate = txtField_contact_number.getText();
+        String address_validate = txtField_address.getText();
+        
+        
+        
         
         try {
             // Writing SQL query and storing in sql String variable
