@@ -564,6 +564,18 @@ public class StudentProfile extends javax.swing.JFrame {
         String cn_validate = txtField_contact_number.getText();
         String address_validate = txtField_address.getText();
         
+        // Using if-else conditions for validation
+        if(firstName_validate.equals("")){
+            
+            JOptionPane.showMessageDialog(null, "Please enter your first name");
+        } else if(mname_validate.equals("")){
+            JOptionPane.showMessageDialog(null, "Please enter your middle name");
+        } else if(lname_validate.equals("")){
+            JOptionPane.showMessageDialog(null, "Please enter your last name");
+        } else if (sex == null){
+            JOptionPane.showMessageDialog(null, "Please select your sex: Male or Female");
+        } 
+        
         
         
         
