@@ -560,13 +560,15 @@ public class StudentProfile extends javax.swing.JFrame {
         String mname_validate = txtField_mname.getText();
         String lname_validate = txtField_lname.getText();
         
-        Date date = dc_birthdate.getDate();
+        Date date_bd = dc_birthdate.getDate();
         String cn_validate = txtField_contact_number.getText();
         String address_validate = txtField_address.getText();
         
+        Date date_dateEnrolled = dc_date_enrolled.getDate();
+        String courseID_validate = txtField_course_id.getText();
+        
         // Using if-else conditions for validation
         if(firstName_validate.equals("")){
-            
             JOptionPane.showMessageDialog(null, "Please enter your first name");
         } else if(mname_validate.equals("")){
             JOptionPane.showMessageDialog(null, "Please enter your middle name");
@@ -574,11 +576,21 @@ public class StudentProfile extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please enter your last name");
         } else if (sex == null){
             JOptionPane.showMessageDialog(null, "Please select your sex: Male or Female");
-        } 
-        
-        
-        
-        
+        } else if (date_bd == null){
+            JOptionPane.showMessageDialog(null, "Please select your birthdate");
+        } else if (cn_validate.equals("")){
+            JOptionPane.showMessageDialog(null, "Please enter your contact number");
+        } else if (address_validate.equals("")){
+            JOptionPane.showMessageDialog(null, "Please enter your address");
+        } else if (studentImage == null){
+            JOptionPane.showMessageDialog(null, "Please choose an image");
+        } else if (date_dateEnrolled == null){
+            JOptionPane.showMessageDialog(null, "Please select your date of enrollment");
+        } else if (courseID_validate.equals("")){
+            JOptionPane.showMessageDialog(null, "Please enter your Course ID");
+        } else {
+           
+        // If all data validations have been assigned a value then run 
         try {
             // Writing SQL query and storing in sql String variable
             String sql = "INSERT INTO stud_profile (stud_id, fname, mname, lname, sex, birthdate, contact_number, address, course_id, date_enrolled, stud_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
@@ -631,6 +643,7 @@ public class StudentProfile extends javax.swing.JFrame {
                 
             }
         } // end of finally block
+        } // end of else block
     }//GEN-LAST:event_btn_saveActionPerformed
 
     /**
