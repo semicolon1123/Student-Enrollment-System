@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import net.coobird.thumbnailator.Thumbnails;
+import net.proteanit.sql.DbUtils;
 
 
 public class StudentProfile extends javax.swing.JFrame {
@@ -51,6 +52,32 @@ public class StudentProfile extends javax.swing.JFrame {
         dc_date_enrolled.setDate(null);
         txtField_course_id.setText("");
     }
+    
+    private void updateTable(){
+        
+        try {
+            
+            String sql = "SELECT * FROM stud_profile";
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            table_student_info.setModel(DbUtils.resultSetToTableModel(rs));
+            
+        } catch (Exception e){
+            
+            JOptionPane.showMessageDialog(null, e);
+        } finally {
+            
+            try {
+                // Closing the connection
+                rs.close();
+                pst.close();
+            } catch (Exception e){
+                
+            }
+            
+        } // end of finally block
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -104,7 +131,7 @@ public class StudentProfile extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         radio_btn_3 = new javax.swing.JRadioButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table_student_info = new javax.swing.JTable();
 
         jRadioButton1.setText("jRadioButton1");
 
@@ -450,7 +477,7 @@ public class StudentProfile extends javax.swing.JFrame {
 
         jPanel4.add(jPanel5);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table_student_info.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -461,8 +488,8 @@ public class StudentProfile extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTable1.setRequestFocusEnabled(false);
-        jScrollPane2.setViewportView(jTable1);
+        table_student_info.setRequestFocusEnabled(false);
+        jScrollPane2.setViewportView(table_student_info);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -627,14 +654,15 @@ public class StudentProfile extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please choose an image");
         } else if (date_dateEnrolled == null){
             JOptionPane.showMessageDialog(null, "Please select your date of enrollment");
-        } else if (courseID_validate.equals("")){
-            JOptionPane.showMessageDialog(null, "Please enter your Course ID");
-        } else {
+        } else if (courseID_validate == null){
+            JOptionPane.showMessageDialog(null, "Please enter your course ID");
+        }
+        else {
            
         // If all data validations have been assigned a value then run 
         try {
             // Writing SQL query and storing in sql String variable
-            String sql = "INSERT INTO stud_profile (stud_id, fname, mname, lname, sex, birthdate, contact_number, address, course_id, date_enrolled, stud_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            String sql = "INSERT INTO stud_profile (fname, mname, lname, sex, birthdate, contact_number, address, course_id, date_enrolled, stud_image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             // Oject conn is used to create connection between java application and MySQL database and will execute the query
             pst = conn.prepareStatement(sql);
             
@@ -664,7 +692,11 @@ public class StudentProfile extends javax.swing.JFrame {
             String strDateEnrolled = sdf_date_enrolled.format(date_enrolled);
             
             pst.setString(9, strDateEnrolled);
-            pst.setString(10, txtField_course_id.getText());
+            
+            String courseID = txtField_course_id.getText();
+            //String courseID_data = Integer.parseInt(courseID);
+            
+            pst.setString(10, courseID);
             
             // execute() method used to execute the SQL query
             pst.execute();
@@ -684,6 +716,11 @@ public class StudentProfile extends javax.swing.JFrame {
             }
         } // end of finally block
         } // end of else block
+        
+        // Updating data in JTable after saving 
+        updateTable();
+        // Clearing all the fields after saving
+        clearFields();
     }//GEN-LAST:event_btn_saveActionPerformed
 
     private void btn_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newActionPerformed
@@ -758,12 +795,12 @@ public class StudentProfile extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel label_image;
     private javax.swing.JRadioButton radio_btn_3;
     private javax.swing.JRadioButton radio_btn_female;
     private javax.swing.JRadioButton radio_btn_male;
+    private javax.swing.JTable table_student_info;
     private javax.swing.JTextArea txtField_address;
     private javax.swing.JTextField txtField_contact_number;
     private javax.swing.JTextField txtField_course_id;
