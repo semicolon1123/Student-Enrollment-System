@@ -30,6 +30,26 @@ public class StudentProfile extends javax.swing.JFrame {
         
         // Creating a connection from your database to a java program
         conn = MySQLConnect.ConnectDB();
+        radio_btn_3.setSelected(false);
+        radio_btn_3.setVisible(false);
+    }
+    
+    // Method for emptying all fields
+    public void clearFields(){
+        txtField_student_id.setText("");
+        txtField_fname.setText("");
+        txtField_mname.setText("");
+        txtField_lname.setText("");
+        radio_btn_male.setSelected(false);
+        radio_btn_female.setSelected(false);
+        radio_btn_3.setSelected(true);
+        dc_birthdate.setDate(null);
+        txtField_contact_number.setText("");
+        txtField_address.setText("");
+        label_image.setIcon(null);
+        txtField_image_path.setText("");
+        dc_date_enrolled.setDate(null);
+        txtField_course_id.setText("");
     }
 
     /**
@@ -42,6 +62,7 @@ public class StudentProfile extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jRadioButton1 = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -81,8 +102,11 @@ public class StudentProfile extends javax.swing.JFrame {
         btn_clear = new javax.swing.JButton();
         jTextField3 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
+        radio_btn_3 = new javax.swing.JRadioButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+
+        jRadioButton1.setText("jRadioButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new java.awt.FlowLayout());
@@ -341,6 +365,11 @@ public class StudentProfile extends javax.swing.JFrame {
         btn_new.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         btn_new.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/new-icon.png"))); // NOI18N
         btn_new.setText("New");
+        btn_new.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_newActionPerformed(evt);
+            }
+        });
 
         btn_save.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         btn_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Save-icon.png"))); // NOI18N
@@ -370,6 +399,10 @@ public class StudentProfile extends javax.swing.JFrame {
 
         jLabel13.setText("Search");
 
+        buttonGroup1.add(radio_btn_3);
+        radio_btn_3.setText("rb3");
+        radio_btn_3.setBorderPainted(true);
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -389,21 +422,29 @@ public class StudentProfile extends javax.swing.JFrame {
                 .addComponent(btn_delete)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_clear)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(radio_btn_3)
                 .addGap(64, 64, 64))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btn_new, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                        .addComponent(jLabel13)
-                        .addComponent(jTextField3))
-                    .addComponent(btn_save, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(btn_update, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_delete, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_clear, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(radio_btn_3)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btn_new, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                                .addComponent(jLabel13)
+                                .addComponent(jTextField3))
+                            .addComponent(btn_save, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                            .addComponent(btn_update, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_delete, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -598,11 +639,10 @@ public class StudentProfile extends javax.swing.JFrame {
             pst = conn.prepareStatement(sql);
             
             // Getting data to INSERT INTO the database
-            pst.setString(1, txtField_student_id.getText());
-            pst.setString(2, txtField_fname.getText());
-            pst.setString(3, txtField_mname.getText());
-            pst.setString(4, txtField_lname.getText());
-            pst.setString(5, sex);
+            pst.setString(1, txtField_fname.getText());
+            pst.setString(2, txtField_mname.getText());
+            pst.setString(3, txtField_lname.getText());
+            pst.setString(4, sex);
             
             // Taking an object of Date from java utility package and getting the date from JDateChooseer birthdate 
             java.util.Date date_birthdate = dc_birthdate.getDate();
@@ -611,10 +651,10 @@ public class StudentProfile extends javax.swing.JFrame {
             // Storing the date format in strDateOutput String variable
             String strBirthDate = sdf_birthdate.format(date_birthdate);
             
-            pst.setString(6, strBirthDate);
-            pst.setString(7, txtField_contact_number.getText());
-            pst.setString(8, txtField_address.getText());
-            pst.setBytes(9, studentImage);
+            pst.setString(5, strBirthDate);
+            pst.setString(6, txtField_contact_number.getText());
+            pst.setString(7, txtField_address.getText());
+            pst.setBytes(8, studentImage);
             
              // Taking an object of Date from java utility package and getting the date from JDateChooseer birthdate 
             java.util.Date date_enrolled = dc_birthdate.getDate();
@@ -623,8 +663,8 @@ public class StudentProfile extends javax.swing.JFrame {
             // Storing the date format in strDateOutput String variable
             String strDateEnrolled = sdf_date_enrolled.format(date_enrolled);
             
-            pst.setString(10, strDateEnrolled);
-            pst.setString(11, txtField_course_id.getText());
+            pst.setString(9, strDateEnrolled);
+            pst.setString(10, txtField_course_id.getText());
             
             // execute() method used to execute the SQL query
             pst.execute();
@@ -645,6 +685,11 @@ public class StudentProfile extends javax.swing.JFrame {
         } // end of finally block
         } // end of else block
     }//GEN-LAST:event_btn_saveActionPerformed
+
+    private void btn_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newActionPerformed
+        // Calling clearFields method upon clicking New Button
+        clearFields();
+    }//GEN-LAST:event_btn_newActionPerformed
 
     /**
      * @param args the command line arguments
@@ -710,11 +755,13 @@ public class StudentProfile extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel label_image;
+    private javax.swing.JRadioButton radio_btn_3;
     private javax.swing.JRadioButton radio_btn_female;
     private javax.swing.JRadioButton radio_btn_male;
     private javax.swing.JTextArea txtField_address;
