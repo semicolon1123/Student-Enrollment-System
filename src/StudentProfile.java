@@ -33,6 +33,8 @@ public class StudentProfile extends javax.swing.JFrame {
         conn = MySQLConnect.ConnectDB();
         radio_btn_3.setSelected(false);
         radio_btn_3.setVisible(false);
+        // showing data in JTable upon execution
+        updateTable();
     }
     
     // Method for emptying all fields
@@ -489,6 +491,11 @@ public class StudentProfile extends javax.swing.JFrame {
             }
         ));
         table_student_info.setRequestFocusEnabled(false);
+        table_student_info.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table_student_infoMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(table_student_info);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -675,28 +682,29 @@ public class StudentProfile extends javax.swing.JFrame {
             // Taking an object of Date from java utility package and getting the date from JDateChooseer birthdate 
             java.util.Date date_birthdate = dc_birthdate.getDate();
             // Giving format for the date using SimpleDateFormat Class by taking an object named sdf 
-            SimpleDateFormat sdf_birthdate = new SimpleDateFormat("yyy-MM-dd");
+            SimpleDateFormat sdf_birthdate = new SimpleDateFormat("yyyy-MM-dd");
             // Storing the date format in strDateOutput String variable
             String strBirthDate = sdf_birthdate.format(date_birthdate);
             
             pst.setString(5, strBirthDate);
             pst.setString(6, txtField_contact_number.getText());
             pst.setString(7, txtField_address.getText());
-            pst.setBytes(8, studentImage);
-            
-             // Taking an object of Date from java utility package and getting the date from JDateChooseer birthdate 
-            java.util.Date date_enrolled = dc_birthdate.getDate();
-            // Giving format for the date using SimpleDateFormat Class by taking an object named sdf 
-            SimpleDateFormat sdf_date_enrolled = new SimpleDateFormat("yyy-MM-dd");
-            // Storing the date format in strDateOutput String variable
-            String strDateEnrolled = sdf_date_enrolled.format(date_enrolled);
-            
-            pst.setString(9, strDateEnrolled);
             
             String courseID = txtField_course_id.getText();
             //String courseID_data = Integer.parseInt(courseID);
             
-            pst.setString(10, courseID);
+            pst.setString(8, courseID);
+            ;
+            
+             // Taking an object of Date from java utility package and getting the date from JDateChooseer birthdate 
+            java.util.Date date_enrolled = dc_date_enrolled.getDate();
+            // Giving format for the date using SimpleDateFormat Class by taking an object named sdf 
+            SimpleDateFormat sdf_date_enrolled = new SimpleDateFormat("yyyy-MM-dd");
+            // Storing the date format in strDateOutput String variable
+            String strDateEnrolled = sdf_date_enrolled.format(date_enrolled);
+            
+            pst.setString(9, strDateEnrolled);
+            pst.setBytes(10, studentImage);
             
             // execute() method used to execute the SQL query
             pst.execute();
@@ -727,6 +735,42 @@ public class StudentProfile extends javax.swing.JFrame {
         // Calling clearFields method upon clicking New Button
         clearFields();
     }//GEN-LAST:event_btn_newActionPerformed
+
+    private void table_student_infoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_student_infoMouseClicked
+        
+        int row = table_student_info.getSelectedRow();
+        String tableClick = table_student_info.getModel().getValueAt(row, 0).toString();
+        
+        try {
+            
+            String sql = "SELECT * FROM stud_profile WHERE stud_id = " + tableClick;
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            
+            if (rs.next()){
+                String str_fname = rs.getString("fname");
+                txtField_fname.setText(str_fname);
+                
+                String str_mname = rs.getString("mname");
+                txtField_mname.setText(str_mname);
+                
+                String str_lname = rs.getString("lname");
+                txtField_lname.setText(str_lname);
+                
+                String str_sex = rs.getString("sex");
+                if ("Male".equals(str_sex)){
+                    radio_btn_male.setSelected(true);
+                }
+                
+                if ("Female".equals("sex")){
+                    radio_btn_female.setSelected(true);
+                }     
+                
+            }
+        } catch (Exception e){
+            
+        }
+    }//GEN-LAST:event_table_student_infoMouseClicked
 
     /**
      * @param args the command line arguments
