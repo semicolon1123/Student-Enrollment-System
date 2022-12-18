@@ -35,6 +35,7 @@ public class StudentProfile extends javax.swing.JFrame {
         radio_btn_3.setVisible(false);
         // showing data in JTable upon execution
         updateTable();
+        btn_save.enableInputMethods(false);
     }
     
     // Method for emptying all fields
@@ -412,6 +413,11 @@ public class StudentProfile extends javax.swing.JFrame {
         btn_update.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         btn_update.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/update.png"))); // NOI18N
         btn_update.setText("Update");
+        btn_update.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updateActionPerformed(evt);
+            }
+        });
 
         btn_delete.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         btn_delete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete.png"))); // NOI18N
@@ -657,12 +663,12 @@ public class StudentProfile extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please enter your contact number");
         } else if (address_validate.equals("")){
             JOptionPane.showMessageDialog(null, "Please enter your address");
-        } else if (studentImage == null){
-            JOptionPane.showMessageDialog(null, "Please choose an image");
-        } else if (date_dateEnrolled == null){
-            JOptionPane.showMessageDialog(null, "Please select your date of enrollment");
         } else if (courseID_validate == null){
             JOptionPane.showMessageDialog(null, "Please enter your course ID");
+        } else if (date_dateEnrolled == null){
+            JOptionPane.showMessageDialog(null, "Please select your date of enrollment");
+        } else if (studentImage == null){
+            JOptionPane.showMessageDialog(null, "Please choose an image");
         }
         else {
            
@@ -694,7 +700,6 @@ public class StudentProfile extends javax.swing.JFrame {
             //String courseID_data = Integer.parseInt(courseID);
             
             pst.setString(8, courseID);
-            ;
             
              // Taking an object of Date from java utility package and getting the date from JDateChooseer birthdate 
             java.util.Date date_enrolled = dc_date_enrolled.getDate();
@@ -743,11 +748,14 @@ public class StudentProfile extends javax.swing.JFrame {
         
         try {
             
-            String sql = "SELECT * FROM stud_profile WHERE stud_id = " + tableClick;
+            String sql = "SELECT * FROM stud_profile WHERE stud_id = '" + tableClick +"'";
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
             
             if (rs.next()){
+                String str_studID = rs.getString("stud_id");
+                txtField_student_id.setText(str_studID);
+                
                 String str_fname = rs.getString("fname");
                 txtField_fname.setText(str_fname);
                 
@@ -766,11 +774,50 @@ public class StudentProfile extends javax.swing.JFrame {
                     radio_btn_female.setSelected(true);
                 }     
                 
-            }
+                String str_birthdate = rs.getString("birthdate");
+                Date date_bd = new SimpleDateFormat("yyyy-MM-dd").parse(str_birthdate);
+                dc_birthdate.setDate(date_bd);
+                
+                String str_contactNum = rs.getString("contact_number");
+                txtField_contact_number.setText(str_contactNum);
+                
+                String str_address = rs.getString("address");
+                txtField_address.setText(str_address);
+                
+                String str_imagePath = txtField_image_path.getText();
+                txtField_image_path.setText(str_imagePath);
+                
+                String str_courseID = rs.getString("course_id");
+                txtField_course_id.setText(str_courseID);
+                
+                String str_dateEnrolled = rs.getString("date_enrolled");
+                Date date_de = new SimpleDateFormat("yyyy-MM-dd").parse(str_dateEnrolled);
+                dc_date_enrolled.setDate(date_de);
+                
+                byte[] imageData = rs.getBytes("stud_image");
+                formalPic = new ImageIcon(imageData);
+                label_image.setIcon(formalPic);
+                studentImage = imageData;   
+                  
+            } // end if rs.next() method
         } catch (Exception e){
+            
+            JOptionPane.showMessageDialog(null, e);
+            
+        } finally {
+            try {
+                rs.close();
+                pst.close();
+            } catch (Exception e){
+                
+            }
             
         }
     }//GEN-LAST:event_table_student_infoMouseClicked
+
+    private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_updateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -856,6 +903,7 @@ public class StudentProfile extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 String filename = null;
 private ImageIcon viewImage = null;
+private ImageIcon formalPic = null;
 private String sex; 
 byte[] studentImage = null;
 }
