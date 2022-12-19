@@ -819,7 +819,66 @@ public class StudentProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_table_student_infoMouseClicked
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
-        // TODO add your handling code here:
+        
+        try {
+            String sql = "UPDATE stud_profile SET fname = ?, mname = ?, lname = ?, sex = ?, birthdate = ?, contact_number = ?, address = ?, course_id = ?, date_enrolled = ?, stud_image = ? WHERE stud_id = ?";
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, txtField_fname.getText());
+            pst.setString(2, txtField_mname.getText());
+            pst.setString(3, txtField_lname.getText());
+            
+            if(radio_btn_male.isSelected()){
+                pst.setString(4, "Male");
+            } else {
+                pst.setString(4, "Female");
+            }
+             
+            // Taking an object of Date from java utility package and getting the date from JDateChooseer birthdate 
+            java.util.Date date_birthdate = dc_birthdate.getDate();
+            // Giving format for the date using SimpleDateFormat Class by taking an object named sdf 
+            SimpleDateFormat sdf_birthdate = new SimpleDateFormat("yyyy-MM-dd");
+            // Storing the date format in strDateOutput String variable
+            String strBirthDate = sdf_birthdate.format(date_birthdate);
+            
+            pst.setString(5, strBirthDate);
+            pst.setString(6, txtField_contact_number.getText());
+            pst.setString(7, txtField_address.getText());
+            
+            String courseID = txtField_course_id.getText();
+            //String courseID_data = Integer.parseInt(courseID);
+            
+            pst.setString(8, courseID);
+            
+             // Taking an object of Date from java utility package and getting the date from JDateChooseer birthdate 
+            java.util.Date date_enrolled = dc_date_enrolled.getDate();
+            // Giving format for the date using SimpleDateFormat Class by taking an object named sdf 
+            SimpleDateFormat sdf_date_enrolled = new SimpleDateFormat("yyyy-MM-dd");
+            // Storing the date format in strDateOutput String variable
+            String strDateEnrolled = sdf_date_enrolled.format(date_enrolled);
+            
+            pst.setString(9, strDateEnrolled);
+            pst.setBytes(10, studentImage);
+            
+            pst.setString(11, txtField_student_id.getText());
+            
+            // execute() method used to execute the SQL query
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Data Updated Successfully!");
+            
+        } catch (Exception e){
+            
+            JOptionPane.showMessageDialog(null, e);
+        } finally {
+            try {
+                // Closing the connection
+                pst.close();
+                rs.close();
+            } catch (Exception e){
+                
+            }
+            
+        } // end of finally block
+        updateTable();
     }//GEN-LAST:event_btn_updateActionPerformed
 
     /**
