@@ -35,7 +35,7 @@ public class StudentProfile extends javax.swing.JFrame {
         radio_btn_3.setVisible(false);
         // showing data in JTable upon execution
         updateTable();
-        btn_save.enableInputMethods(false);
+        btn_save.setEnabled(false);
     }
     
     // Method for emptying all fields
@@ -568,7 +568,39 @@ public class StudentProfile extends javax.swing.JFrame {
     }//GEN-LAST:event_txtField_lnameActionPerformed
 
     private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
-        // TODO add your handling code here:
+        // Checks if there is any selected data to be deleted 
+        if (txtField_student_id.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Please select data to delete");
+        } else {
+            // Creating a confirmDialog for confirming data deletion
+            int p = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this data?","Delete",JOptionPane.YES_NO_OPTION);
+            
+            // p = 0 means yes / p = -1 means no
+            if (p == 0){
+              try {
+                  // MySQL query for deleting single record / row 
+                  String sql = "DELETE FROM stud_profile WHERE stud_id = ?";
+                  pst = conn.prepareStatement(sql);
+                  pst.setString(1, txtField_student_id.getText());
+                  pst.execute();
+                  // Display this message after successfully running DELETE query
+                  JOptionPane.showMessageDialog(null, "Data deleted successfully!");
+                  
+              } catch (Exception e){
+                  JOptionPane.showMessageDialog(null, e);
+              } finally {
+                  try{
+                      // Closing the connection
+                      rs.close();
+                      pst.close();
+                  } catch (Exception e){
+                      
+                  }
+              } // end of finally block
+            } 
+        } // end of else statement
+            clearFields();
+            updateTable();
     }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void btn_upload_imageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_upload_imageActionPerformed
@@ -747,7 +779,7 @@ public class StudentProfile extends javax.swing.JFrame {
     private void table_student_infoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_student_infoMouseClicked
         
         int row = table_student_info.getSelectedRow();
-        String tableClick = table_student_info.getModel().getValueAt(row, 0).toString();
+        String tableClick = (table_student_info.getModel().getValueAt(row, 0).toString());
         
         try {
             
@@ -787,8 +819,8 @@ public class StudentProfile extends javax.swing.JFrame {
                 String str_address = rs.getString("address");
                 txtField_address.setText(str_address);
                 
-                String str_imagePath = txtField_image_path.getText();
-                txtField_image_path.setText(str_imagePath);
+                //String str_imagePath = txtField_image_path.getText();
+                //txtField_image_path.setText(str_imagePath);
                 
                 String str_courseID = rs.getString("course_id");
                 txtField_course_id.setText(str_courseID);
