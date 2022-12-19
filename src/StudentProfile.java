@@ -50,7 +50,7 @@ public class StudentProfile extends javax.swing.JFrame {
         dc_birthdate.setDate(null);
         txtField_contact_number.setText("");
         txtField_address.setText("");
-        label_image.setIcon(null);
+        labelimage.setIcon(null);
         txtField_image_path.setText("");
         dc_date_enrolled.setDate(null);
         txtField_course_id.setText("");
@@ -120,7 +120,7 @@ public class StudentProfile extends javax.swing.JFrame {
         txtField_course_id = new javax.swing.JTextField();
         txtField_lname = new javax.swing.JTextField();
         jDesktopPane1 = new javax.swing.JDesktopPane();
-        label_image = new javax.swing.JLabel();
+        labelimage = new javax.swing.JLabel();
         dc_birthdate = new com.toedter.calendar.JDateChooser();
         dc_date_enrolled = new com.toedter.calendar.JDateChooser();
         jPanel4 = new javax.swing.JPanel();
@@ -260,9 +260,9 @@ public class StudentProfile extends javax.swing.JFrame {
 
         jDesktopPane1.setBackground(new java.awt.Color(153, 153, 153));
 
-        label_image.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        labelimage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
 
-        jDesktopPane1.setLayer(label_image, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(labelimage, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -270,14 +270,14 @@ public class StudentProfile extends javax.swing.JFrame {
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
                 .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(label_image, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelimage, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(label_image, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(labelimage, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
 
@@ -485,6 +485,7 @@ public class StudentProfile extends javax.swing.JFrame {
 
         jPanel4.add(jPanel5);
 
+        table_student_info.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         table_student_info.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -496,7 +497,10 @@ public class StudentProfile extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        table_student_info.setGridColor(new java.awt.Color(0, 204, 255));
         table_student_info.setRequestFocusEnabled(false);
+        table_student_info.setSelectionBackground(new java.awt.Color(102, 102, 102));
+        table_student_info.setSelectionForeground(new java.awt.Color(102, 255, 255));
         table_student_info.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 table_student_infoMouseClicked(evt);
@@ -616,7 +620,7 @@ public class StudentProfile extends javax.swing.JFrame {
             // Passing the object "thumbnail" of BufferedImage into the ImageIcon
             viewImage = new ImageIcon(thumbnail);
             // Displaying the icon viewImage into the JLabel_image
-            label_image.setIcon(viewImage);
+            labelimage.setIcon(viewImage);
             
             // Creating from OutputStream the image from JLabel into this studentImage
             studentImage = bos.toByteArray();
@@ -644,7 +648,6 @@ public class StudentProfile extends javax.swing.JFrame {
         Date date_bd = dc_birthdate.getDate();
         String cn_validate = txtField_contact_number.getText();
         String address_validate = txtField_address.getText();
-        
         Date date_dateEnrolled = dc_date_enrolled.getDate();
         String courseID_validate = txtField_course_id.getText();
         
@@ -796,7 +799,7 @@ public class StudentProfile extends javax.swing.JFrame {
                 
                 byte[] imageData = rs.getBytes("stud_image");
                 formalPic = new ImageIcon(imageData);
-                label_image.setIcon(formalPic);
+                labelimage.setIcon(formalPic);
                 studentImage = imageData;   
                   
             } // end if rs.next() method
@@ -887,7 +890,7 @@ public class StudentProfile extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JLabel label_image;
+    private javax.swing.JLabel labelimage;
     private javax.swing.JRadioButton radio_btn_3;
     private javax.swing.JRadioButton radio_btn_female;
     private javax.swing.JRadioButton radio_btn_male;
