@@ -431,6 +431,11 @@ public class StudentProfile extends javax.swing.JFrame {
         btn_clear.setFont(new java.awt.Font("Segoe UI", 1, 11)); // NOI18N
         btn_clear.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clear.png"))); // NOI18N
         btn_clear.setText("Clear");
+        btn_clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_clearActionPerformed(evt);
+            }
+        });
 
         jLabel13.setText("Search");
 
@@ -910,8 +915,14 @@ public class StudentProfile extends javax.swing.JFrame {
             }
             
         } // end of finally block
+        clearFields();
         updateTable();
     }//GEN-LAST:event_btn_updateActionPerformed
+
+    private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
+        // Calling clear method for clearing data
+        clearFields();
+    }//GEN-LAST:event_btn_clearActionPerformed
 
     /**
      * @param args the command line arguments
