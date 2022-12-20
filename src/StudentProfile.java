@@ -134,7 +134,7 @@ public class StudentProfile extends javax.swing.JFrame {
         btn_update = new javax.swing.JButton();
         btn_delete = new javax.swing.JButton();
         btn_clear = new javax.swing.JButton();
-        jTextField3 = new javax.swing.JTextField();
+        txtField_search = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         btn_print = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -467,7 +467,7 @@ public class StudentProfile extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtField_search, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(btn_new)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -496,7 +496,7 @@ public class StudentProfile extends javax.swing.JFrame {
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(btn_new, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                                     .addComponent(jLabel13)
-                                    .addComponent(jTextField3))
+                                    .addComponent(txtField_search))
                                 .addComponent(btn_save, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                                 .addComponent(btn_update, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btn_delete, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -792,11 +792,25 @@ public class StudentProfile extends javax.swing.JFrame {
         updateTable();
         // Clearing all the fields after saving
         clearFields();
+        
+        // Button Settings
+        btn_save.setEnabled(false);
+        btn_new.setEnabled(true);
+        btn_update.setEnabled(true);
+        btn_delete.setEnabled(true);
+        btn_clear.setEnabled(true);
     }//GEN-LAST:event_btn_saveActionPerformed
 
     private void btn_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newActionPerformed
         // Calling clearFields method upon clicking New Button
         clearFields();
+        
+        // Button Settings
+        btn_save.setEnabled(true);
+        btn_new.setEnabled(false);
+        btn_update.setEnabled(false);
+        btn_delete.setEnabled(false);
+        btn_clear.setEnabled(false);
     }//GEN-LAST:event_btn_newActionPerformed
 
     private void table_student_infoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_student_infoMouseClicked
@@ -871,6 +885,13 @@ public class StudentProfile extends javax.swing.JFrame {
             }
             
         }
+        
+        // Button Settings
+        btn_save.setEnabled(false);
+        btn_new.setEnabled(true);
+        btn_update.setEnabled(true);
+        btn_delete.setEnabled(true);
+        btn_clear.setEnabled(true);
     }//GEN-LAST:event_table_student_infoMouseClicked
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
@@ -1027,7 +1048,6 @@ public class StudentProfile extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel labelimage;
     private javax.swing.JRadioButton radio_btn_3;
     private javax.swing.JRadioButton radio_btn_female;
@@ -1040,6 +1060,7 @@ public class StudentProfile extends javax.swing.JFrame {
     private javax.swing.JTextField txtField_image_path;
     private javax.swing.JTextField txtField_lname;
     private javax.swing.JTextField txtField_mname;
+    private javax.swing.JTextField txtField_search;
     private javax.swing.JTextField txtField_student_id;
     // End of variables declaration//GEN-END:variables
 String filename = null;
