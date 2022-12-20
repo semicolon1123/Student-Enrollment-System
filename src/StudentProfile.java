@@ -264,6 +264,7 @@ public class StudentProfile extends javax.swing.JFrame {
 
         jDesktopPane1.setBackground(new java.awt.Color(153, 153, 153));
 
+        labelimage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelimage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
 
         jDesktopPane1.setLayer(labelimage, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -721,7 +722,7 @@ public class StudentProfile extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Please enter your contact number");
         } else if (address_validate.equals("")){
             JOptionPane.showMessageDialog(null, "Please enter your address");
-        } else if (courseID_validate == null){
+        } else if (courseID_validate.equals("")){
             JOptionPane.showMessageDialog(null, "Please enter your course ID");
         } else if (date_dateEnrolled == null){
             JOptionPane.showMessageDialog(null, "Please select your date of enrollment");
@@ -820,7 +821,7 @@ public class StudentProfile extends javax.swing.JFrame {
         
         try {
             
-            String sql = "SELECT * FROM stud_profile WHERE stud_id = '" + tableClick +"'";
+            String sql = "SELECT * FROM stud_profile WHERE stud_id = " + tableClick;
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
             
@@ -840,11 +841,13 @@ public class StudentProfile extends javax.swing.JFrame {
                 String str_sex = rs.getString("sex");
                 if ("Male".equals(str_sex)){
                     radio_btn_male.setSelected(true);
+                } else if ("Female".equals(str_sex)){
+                    radio_btn_female.setSelected(true);
+                } else {
+                    radio_btn_3.setSelected(true);
                 }
                 
-                if ("Female".equals("sex")){
-                    radio_btn_female.setSelected(true);
-                }     
+             
                 
                 String str_birthdate = rs.getString("birthdate");
                 Date date_bd = new SimpleDateFormat("yyyy-MM-dd").parse(str_birthdate);
@@ -867,8 +870,8 @@ public class StudentProfile extends javax.swing.JFrame {
                 dc_date_enrolled.setDate(date_de);
                 
                 byte[] imageData = rs.getBytes("stud_image");
-                formalPic = new ImageIcon(imageData);
-                labelimage.setIcon(formalPic);
+                formate = new ImageIcon(imageData);
+                labelimage.setIcon(formate);
                 studentImage = imageData;   
                   
             } // end if rs.next() method
@@ -1065,7 +1068,7 @@ public class StudentProfile extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 String filename = null;
 private ImageIcon viewImage = null;
-private ImageIcon formalPic = null;
+private ImageIcon formate = null;
 private String sex; 
 byte[] studentImage = null;
 }
