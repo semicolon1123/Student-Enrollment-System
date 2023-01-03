@@ -1,4 +1,6 @@
 
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -11,7 +13,6 @@ import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.imageio.ImageIO;
-import javax.print.PrintException;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -82,9 +83,9 @@ public class StudentProfile extends javax.swing.JFrame {
             }
             
         } // end of finally block
-    }
-    
-
+    } // end of update method
+        
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -449,6 +450,17 @@ public class StudentProfile extends javax.swing.JFrame {
             }
         });
 
+        txtField_search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtField_searchActionPerformed(evt);
+            }
+        });
+        txtField_search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtField_searchKeyReleased(evt);
+            }
+        });
+
         jLabel13.setText("Search");
 
         btn_print.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -528,6 +540,9 @@ public class StudentProfile extends javax.swing.JFrame {
         table_student_info.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 table_student_infoMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                table_student_infoMouseEntered(evt);
             }
         });
         jScrollPane2.setViewportView(table_student_info);
@@ -983,6 +998,41 @@ public class StudentProfile extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_printActionPerformed
 
+    private void txtField_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtField_searchActionPerformed
+        
+           
+    }//GEN-LAST:event_txtField_searchActionPerformed
+
+    private void txtField_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtField_searchKeyReleased
+         
+       String search_validate = txtField_search.getText();
+       
+       if (search_validate.equals("")){
+           updateTable();
+       } else {
+        
+         try {
+             String sql = "SELECT * FROM stud_profile WHERE course_id = ?"; 
+             pst = conn.prepareStatement(sql);
+             pst.setString(1, txtField_search.getText());
+             rs = pst.executeQuery();
+             
+             table_student_info.setModel(DbUtils.resultSetToTableModel(rs));
+             
+             pst.close();
+             
+         } catch (Exception e){
+             JOptionPane.showMessageDialog(null, e);
+         }
+        
+       }
+
+    }//GEN-LAST:event_txtField_searchKeyReleased
+
+    private void table_student_infoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_student_infoMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_table_student_infoMouseEntered
+
     /**
      * @param args the command line arguments
      */
@@ -1013,6 +1063,7 @@ public class StudentProfile extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new StudentProfile().setVisible(true);
             }

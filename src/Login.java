@@ -247,8 +247,11 @@ public class Login extends javax.swing.JFrame {
             timer.stop(); // timer for JProgressBar will stop once the n becomes 100
             
             // Opening Admin JFrame after JProgressBar stops at 100 
-            Admin admin = new Admin();
-            admin.setVisible(true);
+            //Admin admin = new Admin();
+            //admin.setVisible(true);
+            
+            StudentProfile studProf = new StudentProfile();
+            studProf.setVisible(true);
             close();
         }
         
