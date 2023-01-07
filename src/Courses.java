@@ -94,8 +94,8 @@ public class Courses extends javax.swing.JFrame {
         btn_delete = new javax.swing.JButton();
         btn_clear = new javax.swing.JButton();
         txtField_search = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
         btn_print = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         table_course_info = new javax.swing.JTable();
 
@@ -247,13 +247,17 @@ public class Courses extends javax.swing.JFrame {
             }
         });
 
+        txtField_search.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtField_search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtField_searchActionPerformed(evt);
             }
         });
-
-        jLabel13.setText("Search");
+        txtField_search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtField_searchKeyReleased(evt);
+            }
+        });
 
         btn_print.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btn_print.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/printer.png"))); // NOI18N
@@ -264,13 +268,21 @@ public class Courses extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton1.setText("Search");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtField_search, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
@@ -291,23 +303,24 @@ public class Courses extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btn_print, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
                             .addGap(5, 5, 5)
                             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(btn_new, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                                    .addComponent(jLabel13)
                                     .addComponent(txtField_search))
                                 .addComponent(btn_save, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                                 .addComponent(btn_update, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btn_delete, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanel5Layout.createSequentialGroup()
                             .addContainerGap()
-                            .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_print, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -325,7 +338,7 @@ public class Courses extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        table_course_info.setGridColor(new java.awt.Color(0, 204, 255));
+        table_course_info.setGridColor(new java.awt.Color(0, 153, 51));
         table_course_info.setRequestFocusEnabled(false);
         table_course_info.setSelectionBackground(new java.awt.Color(102, 102, 102));
         table_course_info.setSelectionForeground(new java.awt.Color(102, 255, 255));
@@ -598,35 +611,38 @@ public class Courses extends javax.swing.JFrame {
     }//GEN-LAST:event_txtField_course_idActionPerformed
 
     private void txtField_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtField_searchActionPerformed
-        
-        try {
-            String sql = "SELECT * FROM course WHERE course_id = ?";
-            
-            
-            pst = conn.prepareStatement(sql);
-            pst.setString(1, txtField_courseYear.getText());
-            pst.setString(2, txtField_courseDesc.getText());
-            pst.setString(3, txtField_subjectID.getText());
-            pst.setString(4, txtField_course_id.getText());
-                        
-            // execute() method used to execute the SQL query
-            pst.execute();
-            JOptionPane.showMessageDialog(null, "Data Updated Successfully!");
-            
-        } catch (Exception e){
-            
-            JOptionPane.showMessageDialog(null, e);
-        } finally {
-            try {
-                // Closing the connection
-                pst.close();
-                rs.close();
-            } catch (Exception e){
-                
-            }
-            
-        } // end of finally block
+        // TODO add your handling code here:
     }//GEN-LAST:event_txtField_searchActionPerformed
+
+    private void txtField_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtField_searchKeyReleased
+       String search_validate = txtField_search.getText();
+       
+       if (search_validate.equals("")){
+           updateTable();
+       } else {
+        
+         try {
+             String sql = "SELECT * FROM course WHERE subj_id = ?"; 
+             pst = conn.prepareStatement(sql);
+             pst.setString(1, txtField_search.getText());
+             rs = pst.executeQuery();
+             
+             table_course_info.setModel(DbUtils.resultSetToTableModel(rs));
+             
+             pst.close();
+             
+         } catch (Exception e){
+             JOptionPane.showMessageDialog(null, e);
+         }
+        
+       }
+    }//GEN-LAST:event_txtField_searchKeyReleased
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Subject stud_subject = new Subject();
+        stud_subject.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -672,8 +688,8 @@ public class Courses extends javax.swing.JFrame {
     private javax.swing.JButton btn_save;
     private javax.swing.JButton btn_update;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

@@ -1,6 +1,3 @@
-
-import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -84,7 +81,7 @@ public class StudentProfile extends javax.swing.JFrame {
             
         } // end of finally block
     } // end of update method
-        
+    
    
     /**
      * This method is called from within the constructor to initialize the form.
@@ -136,8 +133,8 @@ public class StudentProfile extends javax.swing.JFrame {
         btn_delete = new javax.swing.JButton();
         btn_clear = new javax.swing.JButton();
         txtField_search = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
         btn_print = new javax.swing.JButton();
+        btn_search = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         table_student_info = new javax.swing.JTable();
 
@@ -237,6 +234,7 @@ public class StudentProfile extends javax.swing.JFrame {
         });
 
         txtField_address.setColumns(20);
+        txtField_address.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtField_address.setRows(5);
         jScrollPane1.setViewportView(txtField_address);
 
@@ -287,9 +285,11 @@ public class StudentProfile extends javax.swing.JFrame {
                 .addGap(14, 14, 14))
         );
 
-        dc_birthdate.setDateFormatString("yyyy,MM,dd");
+        dc_birthdate.setDateFormatString("yyyy-MM-dd");
+        dc_birthdate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
-        dc_date_enrolled.setDateFormatString("yyyy,MM,dd");
+        dc_date_enrolled.setDateFormatString("yyyy-MM-dd");
+        dc_date_enrolled.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
 
         buttonGroup1.add(radio_btn_3);
         radio_btn_3.setText("rb3");
@@ -450,6 +450,7 @@ public class StudentProfile extends javax.swing.JFrame {
             }
         });
 
+        txtField_search.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtField_search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtField_searchActionPerformed(evt);
@@ -461,8 +462,6 @@ public class StudentProfile extends javax.swing.JFrame {
             }
         });
 
-        jLabel13.setText("Search");
-
         btn_print.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btn_print.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/printer.png"))); // NOI18N
         btn_print.setText("Print");
@@ -472,13 +471,21 @@ public class StudentProfile extends javax.swing.JFrame {
             }
         });
 
+        btn_search.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_search.setText("Search");
+        btn_search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_searchActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(btn_search)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtField_search, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
@@ -499,23 +506,24 @@ public class StudentProfile extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btn_print, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
                             .addGap(5, 5, 5)
                             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(btn_new, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                                    .addComponent(jLabel13)
                                     .addComponent(txtField_search))
                                 .addComponent(btn_save, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                                 .addComponent(btn_update, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btn_delete, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanel5Layout.createSequentialGroup()
                             .addContainerGap()
-                            .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btn_search, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_print, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -533,7 +541,7 @@ public class StudentProfile extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        table_student_info.setGridColor(new java.awt.Color(0, 204, 255));
+        table_student_info.setGridColor(new java.awt.Color(0, 153, 51));
         table_student_info.setRequestFocusEnabled(false);
         table_student_info.setSelectionBackground(new java.awt.Color(102, 102, 102));
         table_student_info.setSelectionForeground(new java.awt.Color(102, 255, 255));
@@ -1033,6 +1041,13 @@ public class StudentProfile extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_table_student_infoMouseEntered
 
+    private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
+        
+        Courses stud_courses = new Courses();
+        stud_courses.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_searchActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1076,6 +1091,7 @@ public class StudentProfile extends javax.swing.JFrame {
     private javax.swing.JButton btn_new;
     private javax.swing.JButton btn_print;
     private javax.swing.JButton btn_save;
+    private javax.swing.JButton btn_search;
     private javax.swing.JButton btn_update;
     private javax.swing.JButton btn_upload_image;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -1085,7 +1101,6 @@ public class StudentProfile extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

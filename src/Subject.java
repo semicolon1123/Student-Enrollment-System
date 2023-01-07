@@ -34,7 +34,9 @@ public class Subject extends javax.swing.JFrame {
         txtField_subject_id.setText("");
         txtField_subject_desc.setText("");
         txtField_units.setText("");
+        cb_schedule.setSelectedIndex(-1);
         txtField_room.setText("");
+        txtField_instructor.setText("");
     }
     
     private void updateTable(){
@@ -44,7 +46,7 @@ public class Subject extends javax.swing.JFrame {
             String sql = "SELECT * FROM subject";
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
-            table_student_info.setModel(DbUtils.resultSetToTableModel(rs));
+            table_subject_info.setModel(DbUtils.resultSetToTableModel(rs));
             
         } catch (Exception e){
             
@@ -104,10 +106,10 @@ public class Subject extends javax.swing.JFrame {
         btn_delete = new javax.swing.JButton();
         btn_clear = new javax.swing.JButton();
         txtField_search = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
         btn_print = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        table_student_info = new javax.swing.JTable();
+        table_subject_info = new javax.swing.JTable();
 
         jRadioButton1.setText("jRadioButton1");
 
@@ -164,7 +166,7 @@ public class Subject extends javax.swing.JFrame {
         });
 
         cb_schedule.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        cb_schedule.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "07:00", "08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00" }));
+        cb_schedule.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "07:00:00", "08:00:00", "09:00:00", "10:00:00", "11:00:00", "13:00:00", "14:00:00", "15:00:00", "16:00:00" }));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setText("Instructor");
@@ -188,15 +190,12 @@ public class Subject extends javax.swing.JFrame {
                         .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(cb_schedule, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 41, Short.MAX_VALUE))
-                    .addComponent(txtField_subject_desc)
+                    .addComponent(txtField_subject_desc, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                     .addComponent(txtField_subject_id)
                     .addComponent(txtField_units)
                     .addComponent(txtField_room, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtField_instructor))
+                    .addComponent(txtField_instructor)
+                    .addComponent(cb_schedule, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(43, 43, 43))
         );
         jPanel3Layout.setVerticalGroup(
@@ -280,13 +279,17 @@ public class Subject extends javax.swing.JFrame {
             }
         });
 
+        txtField_search.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtField_search.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtField_searchActionPerformed(evt);
             }
         });
-
-        jLabel13.setText("Search");
+        txtField_search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtField_searchKeyReleased(evt);
+            }
+        });
 
         btn_print.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btn_print.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/printer.png"))); // NOI18N
@@ -297,13 +300,26 @@ public class Subject extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jButton1.setText("Search");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jButton1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jButton1KeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtField_search, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
@@ -324,30 +340,31 @@ public class Subject extends javax.swing.JFrame {
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btn_print, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))
                     .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
                             .addGap(5, 5, 5)
                             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(btn_new, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                                    .addComponent(jLabel13)
                                     .addComponent(txtField_search))
                                 .addComponent(btn_save, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                                 .addComponent(btn_update, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btn_delete, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanel5Layout.createSequentialGroup()
                             .addContainerGap()
-                            .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_print, javax.swing.GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.add(jPanel5);
 
-        table_student_info.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        table_student_info.setModel(new javax.swing.table.DefaultTableModel(
+        table_subject_info.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        table_subject_info.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -358,16 +375,16 @@ public class Subject extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        table_student_info.setGridColor(new java.awt.Color(0, 204, 255));
-        table_student_info.setRequestFocusEnabled(false);
-        table_student_info.setSelectionBackground(new java.awt.Color(102, 102, 102));
-        table_student_info.setSelectionForeground(new java.awt.Color(102, 255, 255));
-        table_student_info.addMouseListener(new java.awt.event.MouseAdapter() {
+        table_subject_info.setGridColor(new java.awt.Color(0, 153, 51));
+        table_subject_info.setRequestFocusEnabled(false);
+        table_subject_info.setSelectionBackground(new java.awt.Color(102, 102, 102));
+        table_subject_info.setSelectionForeground(new java.awt.Color(102, 255, 255));
+        table_subject_info.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                table_student_infoMouseClicked(evt);
+                table_subject_infoMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(table_student_info);
+        jScrollPane2.setViewportView(table_subject_info);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -523,10 +540,10 @@ public class Subject extends javax.swing.JFrame {
         btn_clear.setEnabled(false);
     }//GEN-LAST:event_btn_newActionPerformed
 
-    private void table_student_infoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_student_infoMouseClicked
+    private void table_subject_infoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_subject_infoMouseClicked
         
-        int row = table_student_info.getSelectedRow();
-        String tableClick = (table_student_info.getModel().getValueAt(row, 0).toString());
+        int row = table_subject_info.getSelectedRow();
+        String tableClick = (table_subject_info.getModel().getValueAt(row, 0).toString());
         
         try {
             
@@ -574,22 +591,23 @@ public class Subject extends javax.swing.JFrame {
         btn_update.setEnabled(true);
         btn_delete.setEnabled(true);
         btn_clear.setEnabled(true);
-    }//GEN-LAST:event_table_student_infoMouseClicked
+    }//GEN-LAST:event_table_subject_infoMouseClicked
 
     private void btn_updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updateActionPerformed
         
         try {
-            String sql = "UPDATE subject SET subj_id = ?, subj_desc = ?, units = ?, schedule = ?, room = ? WHERE subj_id = ?";
+            String sql = "UPDATE subject SET subj_desc = ?, units = ?, schedule = ?, room = ?, instructor =? WHERE subj_id = ?";
             pst = conn.prepareStatement(sql);
-            pst.setString(1, txtField_subject_id.getText());
-            pst.setString(2, txtField_subject_desc.getText());
-            pst.setString(3, txtField_units.getText());
+            
+            pst.setString(1, txtField_subject_desc.getText());
+            pst.setString(2, txtField_units.getText());
             
             String schedule_value = cb_schedule.getSelectedItem().toString();
-            pst.setString(4, schedule_value);
+            pst.setString(3, schedule_value);
             
-            pst.setString(5, txtField_room.getText());
-            pst.setString(6, txtField_instructor.getText());
+            pst.setString(4, txtField_room.getText());
+            pst.setString(5, txtField_instructor.getText());
+            pst.setString(6, txtField_subject_id.getText());
             
             // execute() method used to execute the SQL query
             pst.execute();
@@ -608,7 +626,6 @@ public class Subject extends javax.swing.JFrame {
             }
             
         } // end of finally block
-        clearFields();
         updateTable();
     }//GEN-LAST:event_btn_updateActionPerformed
 
@@ -627,7 +644,7 @@ public class Subject extends javax.swing.JFrame {
         
         try {
             // Basic syntax for printing JTable directly
-            table_student_info.print(JTable.PrintMode.FIT_WIDTH,header,footer);
+            table_subject_info.print(JTable.PrintMode.FIT_WIDTH,header,footer);
         } catch (java.awt.print.PrinterException e){
             // Display error message if cannot be printed out
             System.err.format("Cannot Print %s%n", e.getMessage());
@@ -654,6 +671,40 @@ public class Subject extends javax.swing.JFrame {
     private void txtField_roomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtField_roomActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtField_roomActionPerformed
+
+    private void txtField_searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtField_searchKeyReleased
+        String search_validate = txtField_search.getText();
+       
+       if (search_validate.equals("")){
+           updateTable();
+       } else {
+        
+         try {
+             String sql = "SELECT * FROM subject WHERE subj_id = ?"; 
+             pst = conn.prepareStatement(sql);
+             pst.setString(1, txtField_search.getText());
+             rs = pst.executeQuery();
+             
+             table_subject_info.setModel(DbUtils.resultSetToTableModel(rs));
+             
+             pst.close();
+             
+         } catch (Exception e){
+             JOptionPane.showMessageDialog(null, e);
+         }
+        
+       }
+    }//GEN-LAST:event_txtField_searchKeyReleased
+
+    private void jButton1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1KeyReleased
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        StudentProfile stud_profile = new StudentProfile();
+        stud_profile.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -700,8 +751,8 @@ public class Subject extends javax.swing.JFrame {
     private javax.swing.JButton btn_update;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cb_schedule;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -714,7 +765,7 @@ public class Subject extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable table_student_info;
+    private javax.swing.JTable table_subject_info;
     private javax.swing.JTextField txtField_instructor;
     private javax.swing.JTextField txtField_room;
     private javax.swing.JTextField txtField_search;

@@ -68,7 +68,7 @@ public class Login extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "LOGIN", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Sylfaen", 1, 18), new java.awt.Color(0, 204, 255))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "LOGIN", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Sylfaen", 1, 18), new java.awt.Color(0, 153, 51))); // NOI18N
         jPanel1.setFont(new java.awt.Font("STZhongsong", 1, 18)); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -85,11 +85,11 @@ public class Login extends javax.swing.JFrame {
 
         txtField_username.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
         txtField_username.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtField_username.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 255), 1, true));
+        txtField_username.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 51), 1, true));
 
         txtField_password.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
         txtField_password.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtField_password.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 204, 255), 1, true));
+        txtField_password.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 153, 51), 1, true));
         txtField_password.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtField_passwordKeyPressed(evt);
@@ -157,9 +157,10 @@ public class Login extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        progressBar.setForeground(new java.awt.Color(0, 153, 51));
         progressBar.setStringPainted(true);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/SLSU Login Design.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -236,6 +237,7 @@ public class Login extends javax.swing.JFrame {
     
     // Creating a class for JProgressBar
     public class progressbar implements ActionListener{
+    @Override
     public void actionPerformed(ActionEvent evt){
         
         int n = progressBar.getValue();
@@ -246,9 +248,7 @@ public class Login extends javax.swing.JFrame {
         }else{
             timer.stop(); // timer for JProgressBar will stop once the n becomes 100
             
-            // Opening Admin JFrame after JProgressBar stops at 100 
-            //Admin admin = new Admin();
-            //admin.setVisible(true);
+            // Opening StudProfile JFrame after JProgressBar stops at 100 
             
             StudentProfile studProf = new StudentProfile();
             studProf.setVisible(true);
